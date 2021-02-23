@@ -6,11 +6,16 @@ import {
     ReferenceField,
     EditButton,
     Edit,
+    Create,
     SimpleForm,
     ReferenceInput,
     SelectInput,
     TextInput
 } from 'react-admin';
+
+const PostTitle = ({record}) => {
+    return <span>Post {record ? `"${record.title}"` : ''}</span>;
+};
 
 export const PostList = props => (
     <List {...props}>
@@ -27,7 +32,7 @@ export const PostList = props => (
 );
 
 export const PostEdit = props => (
-    <Edit {...props}>
+    <Edit title={<PostTitle/>} {...props}>
         <SimpleForm>
             <TextInput source="id"/>
             <ReferenceInput source="userId" reference="users">
@@ -37,4 +42,16 @@ export const PostEdit = props => (
             <TextInput multiline source="body"/>
         </SimpleForm>
     </Edit>
+);
+
+export const PostCreate = props => (
+    <Create {...props}>
+        <SimpleForm>
+            <ReferenceInput source="userId" reference="users">
+                <SelectInput optionText="name"/>
+            </ReferenceInput>
+            <TextInput source="title"/>
+            <TextInput multiline source="body"/>
+        </SimpleForm>
+    </Create>
 );
